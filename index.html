@@ -3,69 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KaarigarPay Pro</title>
+    <title>KaarigarPay Pro - Worker Payment Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1>KaarigarPay Pro</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="home">
-            <h2>Welcome to KaarigarPay Pro</h2>
-            <p>Your solution for efficient payment management.</p>
-        </section>
-        <section id="about">
-            <h2>About Us</h2>
-            <p>We provide a comprehensive payment solution designed for businesses.</p>
-        </section>
-        <section id="contact">
-            <h2>Contact Us</h2>
-            <form id="contactForm">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
-                <button type="submit">Submit</button>
-            </form>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 KaarigarPay Pro</p>
-    </footer>
-
-    <!-- Modals -->
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Modal Content</p>
-        </div>
+    <div id="app" class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">💼</span>
+                    <span class="logo-text">KaarigarPay</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-page="dashboard"><span class="nav-icon">📊</span><span>Dashboard</span></button>
+                <button class="nav-item" data-page="workers"><span class="nav-icon">👥</span><span>Workers</span></button>
+                <button class="nav-item" data-page="items"><span class="nav-icon">📦</span><span>Items</span></button>
+                <button class="nav-item" data-page="materials"><span class="nav-icon">🧵</span><span>Materials</span></button>
+                <button class="nav-item" data-page="daily-entry"><span class="nav-icon">📝</span><span>Daily Entry</span></button>
+                <button class="nav-item" data-page="payments"><span class="nav-icon">💰</span><span>Payments</span></button>
+                <button class="nav-item" data-page="reports"><span class="nav-icon">📈</span><span>Reports</span></button>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header class="app-header">
+                <div class="header-left"><h1 id="page-title">Dashboard</h1></div>
+                <div class="header-right">
+                    <button class="btn-icon" title="Settings">⚙️</button>
+                    <button class="btn-icon" title="Profile">👤</button>
+                </div>
+            </header>
+            <div class="pages-container">
+                <section id="dashboard" class="page active">
+                    <div class="dashboard-grid">
+                        <div class="stats-grid">
+                            <div class="stat-card pending"><div class="stat-label">Total Pending</div><div class="stat-value" id="stat-pending">₹0</div><div class="stat-meta">Across all workers</div></div>
+                            <div class="stat-card paid"><div class="stat-label">Total Paid</div><div class="stat-value" id="stat-paid">₹0</div><div class="stat-meta">This month</div></div>
+                            <div class="stat-card workers"><div class="stat-label">Active Workers</div><div class="stat-value" id="stat-workers">0</div><div class="stat-meta">In system</div></div>
+                            <div class="stat-card items"><div class="stat-label">Items Made</div><div class="stat-value" id="stat-items">0</div><div class="stat-meta">This month</div></div>
+                        </div>
+                        <div class="export-section">
+                            <h3>Quick Export</h3>
+                            <div class="export-buttons">
+                                <button class="btn btn-secondary" id="export-pdf">📄 Export PDF</button>
+                                <button class="btn btn-secondary" id="export-excel">📊 Export Excel</button>
+                            </div>
+                        </div>
+                        <div class="workers-summary">
+                            <div class="section-header"><h3>Worker Summary</h3><a href="#" class="btn-link" data-page="workers">View All →</a></div>
+                            <div id="workers-summary-list" class="workers-cards"></div>
+                        </div>
+                    </div>
+                </section>
+                <section id="workers" class="page">
+                    <div class="page-header"><h2>Worker Management</h2><button class="btn btn-primary" id="add-worker-btn">+ Add Worker</button></div>
+                    <div class="workers-table-container">
+                        <table class="data-table" id="workers-table">
+                            <thead><tr><th>Name</th><th>Phone</th><th>PIN</th><th>Join Date</th><th>Status</th><th>Earnings</th><th>Pending</th><th>Actions</th></tr></thead>
+                            <tbody id="workers-tbody"></tbody>
+                        </table>
+                    </div>
+                </section>
+                <section id="items" class="page">
+                    <div class="page-header"><h2>Items Management</h2><button class="btn btn-primary" id="add-item-btn">+ Add Item</button></div>
+                    <div class="items-table-container">
+                        <table class="data-table" id="items-table">
+                            <thead><tr><th>Item Name</th><th>Admin Price</th><th>Workers</th><th>Actions</th></tr></thead>
+                            <tbody id="items-tbody"></tbody>
+                        </table>
+                    </div>
+                </section>
+                <section id="materials" class="page">
+                    <div class="page-header"><h2>Raw Materials Tracking</h2><button class="btn btn-primary" id="add-material-btn">+ Add Material</button></div>
+                    <div class="materials-table-container">
+                        <table class="data-table" id="materials-table">
+                            <thead><tr><th>Material Type</th><th>Unit</th><th>Total Stock</th><th>Assigned</th><th>Available</th><th>Actions</th></tr></thead>
+                            <tbody id="materials-tbody"></tbody>
+                        </table>
+                    </div>
+                </section>
+                <section id="daily-entry" class="page">
+                    <div class="page-header"><h2>Daily Entry</h2></div>
+                    <div class="daily-entry-form">
+                        <div class="form-group"><label>Select Worker</label><select id="entry-worker-select" class="form-control"><option value="">Choose a worker...</option></select></div>
+                        <div class="form-group"><label>Select Item</label><select id="entry-item-select" class="form-control" disabled><option value="">Choose an item...</option></select></div>
+                        <div class="form-group"><label>Quantity</label><div class="quantity-input"><button class="btn-sm" id="qty-minus">−</button><input type="number" id="entry-quantity" class="form-control" value="1" min="1"><button class="btn-sm" id="qty-plus">+</button></div></div>
+                        <div class="earnings-preview"><div class="preview-row"><span>Admin Earnings:</span><span class="preview-value">₹<span id="preview-admin">0</span></span></div><div class="preview-row"><span>Worker Earnings:</span><span class="preview-value worker">₹<span id="preview-worker">0</span></span></div></div>
+                        <button class="btn btn-primary w-full" id="submit-entry-btn">Record Entry</button>
+                    </div>
+                    <div class="entries-history"><h3>Today's Entries</h3><div id="entries-list" class="entries-list"></div></div>
+                </section>
+                <section id="payments" class="page">
+                    <div class="page-header"><h2>Payment Management</h2><button class="btn btn-primary" id="record-payment-btn">+ Record Payment</button></div>
+                    <div class="payments-tabs">
+                        <button class="tab-btn active" data-tab="pending">Pending Payments</button>
+                        <button class="tab-btn" data-tab="history">Payment History</button>
+                    </div>
+                    <div id="pending-tab" class="tab-content active"><div class="pending-payments-list" id="pending-payments"></div></div>
+                    <div id="history-tab" class="tab-content">
+                        <table class="data-table" id="payments-table">
+                            <thead><tr><th>Date</th><th>Worker</th><th>Admin Amount</th><th>Worker Amount</th><th>Status</th></tr></thead>
+                            <tbody id="payments-tbody"></tbody>
+                        </table>
+                    </div>
+                </section>
+                <section id="reports" class="page">
+                    <div class="page-header"><h2>Reports & Analytics</h2></div>
+                    <div class="reports-grid">
+                        <div class="report-card"><h3>Worker Report</h3><select id="report-worker-select" class="form-control"><option value="">Select a worker...</option></select><button class="btn btn-secondary mt-3" id="generate-worker-report">Generate Report</button></div>
+                        <div class="report-card"><h3>Pending Breakdown</h3><button class="btn btn-secondary w-full" id="pending-breakdown-btn">View Breakdown</button></div>
+                    </div>
+                    <div id="report-output" class="report-output"></div>
+                </section>
+            </div>
+        </main>
     </div>
-
-    <script>
-        // Modal functionality
-        const modal = document.getElementById('myModal');
-        const span = document.getElementsByClassName('close')[0];
-
-        span.onclick = function() {
-            modal.style.display = 'none';
-        }
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
-        }
-    </script>
+    <div class="modal" id="worker-modal"><div class="modal-content"><div class="modal-header"><h2 id="worker-modal-title">Add Worker</h2><button class="modal-close">&times;</button></div><form id="worker-form" class="form"><div class="form-group"><label>Name *</label><input type="text" id="worker-name" class="form-control" required></div><div class="form-group"><label>Phone *</label><input type="tel" id="worker-phone" class="form-control" required></div><div class="form-group"><label>PIN (4 digits) *</label><input type="text" id="worker-pin" class="form-control" maxlength="4" required></div><div class="form-group"><label>Status</label><select id="worker-status" class="form-control"><option value="active">Active</option><option value="inactive">Inactive</option></select></div><div class="form-actions"><button type="button" class="btn btn-secondary" id="worker-modal-close">Cancel</button><button type="submit" class="btn btn-primary">Save Worker</button></div></form></div></div>
+    <div class="modal" id="item-modal"><div class="modal-content"><div class="modal-header"><h2 id="item-modal-title">Add Item</h2><button class="modal-close">&times;</button></div><form id="item-form" class="form"><div class="form-group"><label>Item Name *</label><input type="text" id="item-name" class="form-control" required></div><div class="form-group"><label>Admin Price (₹) *</label><input type="number" id="item-admin-price" class="form-control" step="0.01" required></div><div class="form-group"><label>Worker Pricing</label><div id="worker-pricing-grid" class="pricing-grid"></div></div><div class="form-actions"><button type="button" class="btn btn-secondary" id="item-modal-close">Cancel</button><button type="submit" class="btn btn-primary">Save Item</button></div></form></div></div>
+    <div class="modal" id="material-modal"><div class="modal-content"><div class="modal-header"><h2 id="material-modal-title">Add Material</h2><button class="modal-close">&times;</button></div><form id="material-form" class="form"><div class="form-group"><label>Material Type *</label><input type="text" id="material-name" class="form-control" required></div><div class="form-group"><label>Unit (e.g., kg, m, pcs) *</label><input type="text" id="material-unit" class="form-control" required></div><div class="form-group"><label>Total Stock *</label><input type="number" id="material-stock" class="form-control" step="0.01" required></div><div class="form-group"><label>Assign to Workers</label><div id="material-workers" class="checkbox-grid"></div></div><div class="form-actions"><button type="button" class="btn btn-secondary" id="material-modal-close">Cancel</button><button type="submit" class="btn btn-primary">Save Material</button></div></form></div></div>
+    <div class="modal" id="payment-modal"><div class="modal-content"><div class="modal-header"><h2>Record Payment</h2><button class="modal-close">&times;</button></div><form id="payment-form" class="form"><div class="form-group"><label>Worker *</label><select id="payment-worker-select" class="form-control" required><option value="">Choose a worker...</option></select></div><div class="form-group"><label>Admin Amount (₹) *</label><input type="number" id="payment-admin-amount" class="form-control" step="0.01" required></div><div class="form-group"><label>Worker Amount (₹) *</label><input type="number" id="payment-worker-amount" class="form-control" step="0.01" required></div><div class="form-group"><label>Date *</label><input type="date" id="payment-date" class="form-control" required></div><div class="form-actions"><button type="button" class="btn btn-secondary" id="payment-modal-close">Cancel</button><button type="submit" class="btn btn-primary">Record Payment</button></div></form></div></div>
+    <div class="modal" id="confirm-modal"><div class="modal-content confirm-modal"><div class="modal-header"><h2>Confirm Action</h2><button class="modal-close">&times;</button></div><p id="confirm-message">Are you sure?</p><div class="form-actions"><button type="button" class="btn btn-secondary" id="confirm-cancel">Cancel</button><button type="button" class="btn btn-danger" id="confirm-ok">Confirm</button></div></div></div>
+    <div id="toast" class="toast"></div>
+    <script src="app.js"></script>
 </body>
 </html>
